@@ -1,0 +1,1 @@
+﻿get-childitem c:\users\cmorris\ -recurse | get-acl  | select-object path,owner,accesstostring,group | export-csv “C:\users\cmorris\desktop\security.csv”
