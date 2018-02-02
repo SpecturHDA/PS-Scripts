@@ -39,22 +39,25 @@ new-aduser -name  $fullname -givenname $firstname -surname $lastname -displaynam
 
 Start-Sleep -Milliseconds 2000
 Write-Host "*********************************************"
-Write-Host "User account created!" -ForegroundColor Yellow -BackgroundColor DarkGreen
+Write-Host "User account created!" -ForegroundColor Yellow
 Write-Host "*********************************************"
 
 #Copy Groups from templete user
 Get-ADUser -Identity $Copyuser -Properties memberof | Select-Object -ExpandProperty memberof | Add-ADGroupMember -Members $samaccountname -PassThru | Select-Object -Property SamAccountName
 Write-Host "*********************************************"
-Write-Host "New user added to above groups!" -ForegroundColor Yellow -BackgroundColor DarkGreen
+Write-Host "New user added to above groups!" -ForegroundColor Yellow
 Write-Host "*********************************************"
 
 #Account Details
 Write-Host "*********************************************"
-Write-Host "AD account details:" -ForegroundColor Yellow -BackgroundColor DarkGreen
+Write-Host "AD account details:" -ForegroundColor Yellow
 Write-Host "*********************************************"
 Get-ADUser -Identity $samaccountname -Properties * | fl displayname,userprincipalname,samaccountname,DistinguishedName,homedrive,Homedirectory,scriptpath,title,description,Department,manager,Enabled
 
-#Get Mailbox Database
+#Enable Mailbox
+Write-Host "*********************************************"
+Write-Host "Enable Users Mailbox" -ForegroundColor Yellow
+Write-Host "*********************************************"
 $Databaselist = Get-MailboxDatabase  | select Name
 $linecounter = 1
    foreach($Databasename in $Databaselist){
@@ -64,13 +67,9 @@ $linecounter = 1
 Write-host "`r`n"
 $Database = $Databaselist[[int](Read-Host -Prompt "Please enter the number of the Mailbox Database you wish to place this new user in (i.e. 1 or 5)")-1]
 
-#Enable Mailbox
-Write-Host "*********************************************"
-Write-Host "Creating mailbox" -ForegroundColor Yellow -BackgroundColor DarkGreen
-Write-Host "*********************************************"
 Enable-Mailbox -Identity $UPN -Database $Database
 Write-Host "*********************************************"
-Write-Host "Mailbox created!" -ForegroundColor Yellow -BackgroundColor DarkGreen
+Write-Host "Mailbox created!" -ForegroundColor Yellow
 Write-Host "*********************************************"
 
 #Close PSSession
