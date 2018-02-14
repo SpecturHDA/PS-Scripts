@@ -7,5 +7,5 @@ $linecounter = 1
            $linecounter++
     }
 Write-host "`r`n"
-$Script = $Scripts[[int](Read-Host -Prompt "Please Select a Script to exeicute (i.e. 1,2,or3)")-1]
+$Script = $Scripts[[int](Read-Host -Prompt "Please Select a Script to execute (i.e. 1,2,or3)")-1]
 invoke-expression -Command .\$Script
