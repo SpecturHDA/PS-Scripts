@@ -55,7 +55,7 @@ Write-Host "*********************************************"
 Write-Host "*********************************************"
 Write-Host "Block login for account in O365 for '$Fullname'" -ForegroundColor Yellow
 Write-Host "*********************************************"
-Set-MsolUser -UserPrincipalName $UPN -BlockCredential $true
+Set-MsolUser -UserPrincipalName $UPN -BlockCredential $false
 Write-Host "Done!"
 Write-Host "*********************************************"
 
