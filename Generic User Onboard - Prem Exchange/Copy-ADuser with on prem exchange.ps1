@@ -17,7 +17,6 @@ $UPN = $samaccountname + "@" + (Get-ADDomain).dnsroot
 $newPassword = (Read-Host -Prompt "Provide New Password" -AsSecureString)
 $Copyuser = (Read-Host -Prompt "Username of the account you are copy permissions from")
 $OU = (Get-AdUser $Copyuser).distinguishedName.Split(',',2)[1]
-$Database = #(Sting to pull the data for $Copyuser)
 
 $profilepath = (get-aduser $Copyuser -Properties *).profilepath
 If ($profilepath -ne $null)
