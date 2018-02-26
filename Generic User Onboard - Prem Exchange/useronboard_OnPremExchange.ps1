@@ -1,3 +1,9 @@
+#==================================================================================================
+# Created by Darrell Tang 
+# Additions By Chris Morris
+# Last updates on 2/24/2018
+#==================================================================================================
+
 clear-host
 import-module activedirectory
 Add-PSSnapin Microsoft.Exchange.Management.PowerShell.E2010
@@ -15,6 +21,7 @@ $firstname = (Read-Host -Prompt "First Name")
 $lastname = (Read-Host -Prompt "Last Name")
 $fullname = $firstname + " " + $lastname
 $samaccountname = (Read-Host -Prompt "Login Name (i.e. JSmith)")
+#$samaccountname = $Firstname.substring(0,1)+$lastname
 $UPN = $samaccountname + "@" + (Get-ADDomain).dnsroot
 $newPassword = (Read-Host -Prompt "Provide New Password" -AsSecureString)
 $OU = Get-UserOU
@@ -34,6 +41,10 @@ $scriptpath = (get-aduser templateuser -Properties *).scriptpath
 $jobtitle = (Read-Host -Prompt "Job Title")
 $department = (Read-Host -Prompt "Department")
 $manager = (Read-Host -Prompt "Manager (i.e. Jdoe)")
+if ($manager -like $null)
+{
+Write-host $manager Has no manager
+}
 
 new-aduser -name  $fullname -givenname $firstname -surname $lastname -displayname $fullname -userprincipalname $UPN -samaccountname $samaccountname -accountpassword $newPassword -path $OU -profilepath $profilepath -HomeDrive $homedrive -HomeDirectory $HomeDirectory -scriptpath $scriptpath -title $jobtitle -description $jobtitle -department $department -manager $manager -passthru | Enable-ADAccount
 
@@ -55,7 +66,7 @@ $linecounter = 1
     }
 Write-host "`r`n"
 $Database = $Databaselist[[int](Read-Host -Prompt "Please enter the number of the Mailbox Database you wish to place this new user in (i.e. 1 or 5)")-1]
-Enable-Mailbox -Identity $UPN -Database $Database
+Enable-Mailbox -Identity $samaccountname -Database "$Database"
 Write-Host "*********************************************"
 Write-Host "Mailbox created!" -ForegroundColor Yellow
 Write-Host "*********************************************"
