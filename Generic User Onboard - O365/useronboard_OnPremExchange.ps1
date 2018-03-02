@@ -47,10 +47,10 @@ Get-ADUser -Identity $samaccountname -Properties * | fl displayname,userprincipa
 Write-Host "*********************************************"
 Write-Host "Create New user Mailbox" -ForegroundColor Yellow
 Write-Host "*********************************************"
-$Databaselist = Get-MailboxDatabase  | select Name
+$Databaselist = Get-MailboxDatabase  | select -ExpandProperty Name
 $linecounter = 1
    foreach($Databasename in $Databaselist){
-      Write-Host($linecounter.ToString() + ". " + $Databasename.Name)
+      Write-Host($linecounter.ToString() + ". " + $Databasename)
       $linecounter++
     }
 Write-host "`r`n"
