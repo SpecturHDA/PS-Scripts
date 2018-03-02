@@ -58,20 +58,21 @@ Get-ADUser -Identity $samaccountname -Properties * | fl displayname,userprincipa
 Write-Host "*********************************************"
 Write-Host "Create New user Mailbox" -ForegroundColor Yellow
 Write-Host "*********************************************"
-$Databaselist = Get-MailboxDatabase  | select Name
+$Databaselist = Get-MailboxDatabase  | select -ExpandProperty Name
 $linecounter = 1
    foreach($Databasename in $Databaselist){
-      Write-Host($linecounter.ToString() + ". " + $Databasename.Name)
+      Write-Host($linecounter.ToString() + ". " + $Databasename)
       $linecounter++
     }
 Write-host "`r`n"
 $Database = $Databaselist[[int](Read-Host -Prompt "Please enter the number of the Mailbox Database you wish to place this new user in (i.e. 1 or 5)")-1]
-Enable-Mailbox -Identity $samaccountname -Database "$Database"
+Enable-Mailbox -Identity $samaccountname -Database $Database
+Start-Sleep -Milliseconds 6000
 Write-Host "*********************************************"
 Write-Host "Mailbox created!" -ForegroundColor Yellow
 Write-Host "*********************************************"
 
-#Close PSSession
-#get-pssession | remove-pssession
+Close PSSession
+get-pssession | remove-pssession
 
 Pause
