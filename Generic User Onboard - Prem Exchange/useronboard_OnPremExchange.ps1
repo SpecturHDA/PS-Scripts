@@ -43,7 +43,7 @@ $department = (Read-Host -Prompt "Department")
 $manager = (Read-Host -Prompt "Manager (i.e. Jdoe)")
 if ($manager -like $null)
 {
-Write-host $manager Has no manager
+Write-host "No Manage Added"
 }
 
 new-aduser -name  $fullname -givenname $firstname -surname $lastname -displayname $fullname -userprincipalname $UPN -samaccountname $samaccountname -accountpassword $newPassword -path $OU -profilepath $profilepath -HomeDrive $homedrive -HomeDirectory $HomeDirectory -scriptpath $scriptpath -title $jobtitle -description $jobtitle -department $department -manager $manager -passthru | Enable-ADAccount
