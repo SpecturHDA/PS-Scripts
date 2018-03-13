@@ -48,6 +48,12 @@ Write-Host "Please document the below group memberships for '$Fullname' below" -
 Get-ADPrincipalGroupMembership –identity $SamAccountName | Select-Object name
 Write-Host "*********************************************" -ForegroundColor Green
 
-
+#Move user to “Disabled>>>Active Mailbox” OU
+Write-Host "*********************************************"
+Write-Host "Moving AD User '$username' to OU: Disabled\Active Mailbox" -ForegroundColor Yellow -BackgroundColor DarkGreen
+Write-Host "*********************************************"
+Get-ADUser $username | Move-ADObject -TargetPath 'OU=Active Mailbox,OU=Disabled,DC=regulusrx,DC=lan'
+Write-Host "Done!"
+Write-Host "*********************************************"
 
 
