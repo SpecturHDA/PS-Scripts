@@ -52,8 +52,10 @@ Write-Host "*********************************************" -ForegroundColor Gree
 Write-Host "*********************************************"
 Write-Host "Moving AD User '$username' to OU: Disabled\Active Mailbox" -ForegroundColor Yellow -BackgroundColor DarkGreen
 Write-Host "*********************************************"
-Get-ADUser $username | Move-ADObject -TargetPath 'OU=Active Mailbox,OU=Disabled,DC=regulusrx,DC=lan'
+Get-ADUser $username | Move-ADObject -TargetPath 'OU= ,OU=,DC=,DC='
 Write-Host "Done!"
 Write-Host "*********************************************"
+
+
 
 
