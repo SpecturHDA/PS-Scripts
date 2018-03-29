@@ -1,7 +1,9 @@
 ﻿Clear-Host
 
-$Activecount = (Get-ADUser  -Filter 'enabled -eq $false' | select -ExpandProperty Name).count
-$Disabledcount = (Get-ADUser  -Filter 'enabled -eq $True' | select -ExpandProperty Name).count
+import-module activedirectory
+
+$Activecount = (Get-ADUser  -Filter 'enabled -eq $True' | select -ExpandProperty Name).count
+$Disabledcount = (Get-ADUser  -Filter 'enabled -eq $false' | select -ExpandProperty Name).count
 $inactivecount = (Search-ADAccount -UsersOnly -AccountInactive -TimeSpan 30 | ?{$_.enabled -eq $True} | Get-ADUser -Properties Name | Select Name).count
 
 Write-Host "**********************************************************"
